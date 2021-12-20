@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Movie
      * @ORM\Column(type="integer")
      */
     private $year;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Director::class, mappedBy="movie")
+     */
+    private $directors;
+
+    public function __construct()
+    {
+        $this->directors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,33 @@ class Movie
     public function setYear(int $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Director[]
+     */
+    public function getDirectors(): Collection
+    {
+        return $this->directors;
+    }
+
+    public function addDirector(Director $director): self
+    {
+        if (!$this->directors->contains($director)) {
+            $this->directors[] = $director;
+            $director->addMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDirector(Director $director): self
+    {
+        if ($this->directors->removeElement($director)) {
+            $director->removeMovie($this);
+        }
 
         return $this;
     }
