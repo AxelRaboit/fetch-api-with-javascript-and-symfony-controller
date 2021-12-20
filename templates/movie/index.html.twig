@@ -1,39 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Movie index{% endblock %}
+{% block title %}Films provenant de la base de donnée{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
 
 {% block body %}
-    <h1>Movie index</h1>
+    <div class="container-movie">
+        <div class="container-header">
+            <h1>Films provenant de la base de donnée</h1>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Synopsis</th>
-                <th>Year</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for movie in movies %}
-            <tr>
-                <td>{{ movie.id }}</td>
-                <td>{{ movie.title }}</td>
-                <td>{{ movie.synopsis }}</td>
-                <td>{{ movie.year }}</td>
-                <td>
-                    <a href="{{ path('movie_show', {'id': movie.id}) }}">show</a>
-                    <a href="{{ path('movie_edit', {'id': movie.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="container-result">
+            <p>il y a ( <span class="number-result">{{ movies|length }} </span>) film{{ movies|length > 1 ? 's' }} en base de donnée</p>
+        </div>
+        <div class="container-card">
+            {% for movie in movies %}
+                <div class="card">
+                    <a class="movie-link" href="{{ path('movie_show', {id: movie.id}) }}">
+                        <img class="poster-image" src="{{ asset('images/movie_default.jpg') }}">
+                    </a>
+                    <div class="title">{{ movie.title }}</div>
+                </div>
+            {% endfor %}
+        </div>
 
-    <a href="{{ path('movie_new') }}">Create new</a>
+        <div class="container-new">
+            <a class="add-new-movie-button" href="{{ path('movie_new') }}">Ajouter un film</a>
+        </div>
+    </div>
 {% endblock %}

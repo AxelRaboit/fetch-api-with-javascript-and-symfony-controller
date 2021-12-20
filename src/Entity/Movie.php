@@ -35,7 +35,7 @@ class Movie
     private $year;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Director::class, mappedBy="movie")
+     * @ORM\ManyToMany(targetEntity=Director::class, mappedBy="movie",cascade={"persist"})
      */
     private $directors;
 
