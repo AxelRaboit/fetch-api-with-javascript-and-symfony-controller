@@ -30,7 +30,7 @@ class Director
     private $lastname;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="directors")
+     * @ORM\ManyToMany(targetEntity=Movie::class, inversedBy="directors",cascade={"persist"}))
      */
     private $movie;
 

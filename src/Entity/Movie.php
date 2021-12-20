@@ -25,11 +25,6 @@ class Movie
     private $title;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $synopsis;
@@ -62,18 +57,6 @@ class Movie
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
