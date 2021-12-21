@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Films provenant de l'api the movie db (JavaScript){% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="container-api">
+        <div class="container-header">
+            <h1>Films provenant d'une api affiché par JavaScript</h1>
+        </div>
+        <div class="container-link-api center">
+            <a class="link-button" href="{{ path('movie_from_db') }}">Films provenant de la base de donnée</a>
+            <a class="link-button" href="{{ path('movie_from_api_controller') }}">Films provenant d'une api via controller</a>
+        </div>
+        <div class="container-search-input">
+            <form id="form">
+                <input type="text" placeholder="Search" id="search" class="input-search">
+                <input class="submit-button" type="submit">
+            </form>
+        </div>
+        <div id="cards" class="container-card center">
+            
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = "api_key=eeaf9f1ca0c902baa964c32961d752d4";
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const API_URL = BASE_URL + '/discover/movie?sort_by=popularity.desc&'+API_KEY;
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+        const searchURL = BASE_URL + '/search/movie?'+API_KEY;
+        /* const FEATURED_API = "https://api.themoviedb.org/3api_key=eeaf9f1ca0c902baa964c32961d752d4"; */
+        /* const SEARCH_API = "https://api.themoviedb.org/3/search/movie?api_key=eeaf9f1ca0c902baa964c32961d752d4&language=en-US&query="; */
+        /* const GENRE_API = "https://api.themoviedb.org/3/genre/movie/list?api_key=eeaf9f1ca0c902baa964c32961d752d4&language=en-US"; */
+        /* const MOVIE_GENRE_API = "https://api.themoviedb.org/3/discover/movie?api_key=eeaf9f1ca0c902baa964c32961d752d4&with_genres="; */
+
+
+        const container = document.getElementById('cards');
+        const form = document.getElementById('form');
+        const search = document.getElementById('search');
+        
+        getMovies(API_URL);
+
+        function getMovies(url){
+            fetch(url).then(res => res.json()).then(data => {
+                showMovies(data.results);
+            })
+        }
+
+        function showMovies(data) {
+            container.innerHTML = '';
+            data.forEach(movie => {
+                const {title, poster_path, id} = movie;
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="container-image">
+                        <img class="poster-image" src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}">
+                    </div>
+                    <div class="title">
+                        ${title}
+                    </div>
+                `
+
+                container.appendChild(card);
+            })
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+
+            const searchTerm = search.value;
+
+            if(searchTerm) {
+                getMovies(searchURL+'&query='+searchTerm)
+            }else{
+                getMovies(API_URL);
+            }
+
+        })
+    </script>
+{% endblock %}

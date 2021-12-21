@@ -11,11 +11,14 @@
         <div class="container-header">
             <h1>Films provenant de la base de donnée</h1>
         </div>
-
-        <div class="container-result">
+        <div class="container-link-api center">
+            <a class="link-button" href="{{ path('movie_from_api_controller') }}">Films provenant d'une api via controller</a>
+            <a class="link-button" href="{{ path('movie_api_from_javascript') }}">Films provenant d'une api via JavaScript</a>
+        </div>
+        <div class="container-result center">
             <p>il y a ( <span class="number-result">{{ movies|length }} </span>) film{{ movies|length > 1 ? 's' }} en base de donnée</p>
         </div>
-        <div class="container-card">
+        <div class="container-card center">
             {% for movie in movies %}
                 <div class="card">
                     <a class="movie-link" href="{{ path('movie_show', {id: movie.id}) }}">

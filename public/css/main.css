@@ -88,3 +88,63 @@ h1 {
     color: #1b1c1a;;
     background-color: #f19626;;
 }
+
+.container-search-input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-search {
+    margin: 20px 0 20px 20px;
+    width: 300px;
+    padding: 12px;
+}
+
+.input-search:focus {
+    background-color: #1f1f1f;
+    color: white;
+}
+
+.submit-button {
+    padding: 14px;
+    border: none;
+    background-color: #f19626;
+    transition: 0.5s;
+    cursor: pointer;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #ac6a18;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.container-second-title {
+    margin: 20px;
+    color: #f19626;
+}
+
+.container-link-api {
+    margin: 20px;
+}
+
+.link-button {
+    margin-right: 15px;
+    background-color: #f19626;
+    border: none;
+    padding: 20px 35px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.link-button:hover {
+    background-color: #ac6a18;
+}

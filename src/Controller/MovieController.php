@@ -4,25 +4,50 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Form\MovieType;
+use App\Service\CallApiService;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/film", name="movie_")
+ * @Route("/", name="movie_")
  */
 class MovieController extends AbstractController
 {
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="from_db", methods={"GET"})
      */
-    public function index(MovieRepository $movieRepository): Response
+    public function movieFromDB(MovieRepository $movieRepository): Response
     {
         return $this->render('movie/index.html.twig', [
             'movies' => $movieRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/movie-from-api/api-from-controller", name="from_api_controller", methods={"GET"})
+     */
+    public function apiFromController(CallApiService $callApiService): Response
+    {
+        $datas = $callApiService->getMoviesData();
+
+        return $this->render('movie/api.html.twig', [
+            'datas' => $datas
+        ]);
+    }
+
+    /**
+     * @Route("/movie-from-api/api-from-javascript", name="api_from_javascript", methods={"GET"})
+     */
+    public function apiFromJavascript(CallApiService $callApiService): Response
+    {
+        $datas = $callApiService->getMoviesData();
+
+        return $this->render('movie/api_from_javascript.html.twig', [
+            'datas' => $datas
         ]);
     }
 
