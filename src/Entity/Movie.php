@@ -39,6 +39,11 @@ class Movie
      */
     private $directors;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $poster;
+
     public function __construct()
     {
         $this->directors = new ArrayCollection();
@@ -108,6 +113,18 @@ class Movie
         if ($this->directors->removeElement($director)) {
             $director->removeMovie($this);
         }
+
+        return $this;
+    }
+
+    public function getPoster(): ?string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(?string $poster): self
+    {
+        $this->poster = $poster;
 
         return $this;
     }

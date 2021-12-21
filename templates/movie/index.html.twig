@@ -22,7 +22,7 @@
             {% for movie in movies %}
                 <div class="card">
                     <a class="movie-link" href="{{ path('movie_show', {id: movie.id}) }}">
-                        <img class="poster-image" src="{{ asset('images/movie_default.jpg') }}">
+                        <img class="poster-image" src="{{ asset('images/' ~ movie.poster) }}">
                     </a>
                     <div class="title">{{ movie.title }}</div>
                 </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="container-new">
-            <a class="add-new-movie-button" href="{{ path('movie_new') }}">Ajouter un film</a>
+            {# <a class="add-new-movie-button" href="{{ path('movie_new') }}">Ajouter un film</a> #}
         </div>
     </div>
 {% endblock %}
