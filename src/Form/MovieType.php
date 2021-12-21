@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Director;
 use App\Entity\Movie;
+use App\Repository\DirectorRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +18,15 @@ class MovieType extends AbstractType
             ->add('title')
             ->add('synopsis')
             ->add('year')
-            ->add('directors')
+            ->add('directors', EntityType::class, [
+                'class' => Director::class,
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function (DirectorRepository $er) {
+                    return $er->createQueryBuilder('d')
+                        ->orderBy('d.firstname', 'ASC');
+                },
+            ])
         ;
     }
 
